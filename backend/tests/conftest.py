@@ -12,6 +12,7 @@ from alembic import command
 from app.config import Settings
 from app.db.base import Base
 from app.db.models import User
+from app.db.session import create_engine
 from app.main import create_app
 
 UserFactory = Callable[..., Awaitable[User]]
@@ -45,16 +46,19 @@ async def db_session(app: FastAPI) -> AsyncIterator[AsyncSession]:
         yield session
 
 
-@pytest.fixture(autouse=True)
-async def clean_tables(migrated_db_url: str) -> AsyncIterator[None]:
-    yield
-    from app.db.session import create_engine
-
-    engine = create_engine(migrated_db_url)
+async def _truncate_all(url: str) -> None:
+    engine = create_engine(url)
     names = ", ".join(t.name for t in reversed(Base.metadata.sorted_tables))
     async with engine.begin() as conn:
         await conn.execute(text(f"TRUNCATE {names} RESTART IDENTITY CASCADE"))
     await engine.dispose()
+
+
+@pytest.fixture(autouse=True)
+async def clean_tables(migrated_db_url: str) -> AsyncIterator[None]:
+    await _truncate_all(migrated_db_url)
+    yield
+    await _truncate_all(migrated_db_url)
 
 
 @pytest.fixture
