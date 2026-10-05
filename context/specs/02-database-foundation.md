@@ -96,7 +96,7 @@ make lint
 
 **Manual verification:**
 1. `make migrate` → `docker compose exec db psql -U app -d email_assistant -c '\dt'` shows the 3 tables.
-2. `curl localhost:8000/api/health` → `database: ok`; stop db → `degraded`.
+2. `curl localhost:8001/api/health` → `database: ok`; stop db → `degraded`.
 
 ## Definition of done
 - [ ] All success criteria met

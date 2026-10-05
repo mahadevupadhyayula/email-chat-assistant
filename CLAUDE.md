@@ -29,8 +29,8 @@ Feature specs live in `context/specs/`. The build order is `context/specs/00-bui
 
 - Start Postgres: `docker compose up -d db`
 - Install: `make install` (runs `uv sync` in `backend/` and `pnpm install` in `frontend/`)
-- Dev backend: `make dev-backend` (uvicorn on :8000, reload)
-- Dev frontend: `make dev-frontend` (Vite on :5173, proxies `/api` → :8000)
+- Dev backend: `make dev-backend` (uvicorn on :8001, reload)
+- Dev frontend: `make dev-frontend` (Vite on :5173, proxies `/api` → :8001)
 - Worker: `make worker` (from Unit 18)
 - Migrations: `make migrate` (`uv run alembic upgrade head`, from Unit 02)
 - Test: `make test` (backend pytest + frontend Vitest)

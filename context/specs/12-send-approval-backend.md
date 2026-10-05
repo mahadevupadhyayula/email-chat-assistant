@@ -108,8 +108,8 @@ make lint
 
 **Manual verification (real Gmail — send to yourself or a test address):**
 1. In the UI ask "Reply to my latest email from <me/test address> saying got it" → the assistant stops after "drafting reply" (no card yet).
-2. `curl -N -b "ea_session=…" localhost:8000/api/conversations/<id>/messages` (GET transcript) → `pending_approval` present; copy `interrupt_id`.
-3. `curl -N -b … -H 'content-type: application/json' -d '{"interrupt_id":"…","decision":"approve"}' localhost:8000/api/conversations/<id>/resume` → stream completes; check Gmail Sent (threaded).
+2. `curl -N -b "ea_session=…" localhost:8001/api/conversations/<id>/messages` (GET transcript) → `pending_approval` present; copy `interrupt_id`.
+3. `curl -N -b … -H 'content-type: application/json' -d '{"interrupt_id":"…","decision":"approve"}' localhost:8001/api/conversations/<id>/resume` → stream completes; check Gmail Sent (threaded).
 
 ## Definition of done
 - [ ] All success criteria met

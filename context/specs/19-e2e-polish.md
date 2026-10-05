@@ -32,7 +32,7 @@ This is the final check that the full chat → tool → card → approval → se
 ### Playwright
 - `pnpm add -D @playwright/test && pnpm exec playwright install chromium`.
 - `frontend/playwright.config.ts`: `testDir: "e2e"`, Chromium only, `baseURL: "http://localhost:5174"`, `webServer: [ { command: "cd ../backend && APP_ENV=e2e DATABASE_URL=$TEST_DATABASE_URL uv run alembic upgrade head && APP_ENV=e2e DATABASE_URL=$TEST_DATABASE_URL uv run uvicorn app.main:app --port 8001", url: "http://localhost:8001/api/health" }, { command: "VITE_API_TARGET=http://localhost:8001 pnpm dev --port 5174", url: "http://localhost:5174" } ]`, `reuseExistingServer: false`.
-- `vite.config.ts`: proxy target reads `process.env.VITE_API_TARGET ?? "http://localhost:8000"`.
+- `vite.config.ts`: proxy target reads `process.env.VITE_API_TARGET ?? "http://localhost:8001"`.
 - `e2e/fixtures.ts`: `signedInPage` fixture → `page.request.post("/api/auth/dev-login")` (cookie stored in context), then `page.goto("/")`. Truncate DB tables before each test via a `POST /api/e2e/reset` endpoint registered only in `e2e` env (truncates app tables + checkpoints, reseeds the fake).
 - Specs (`e2e/core-flow.spec.ts`):
   1. `redirects to login when signed out` → `/login` with "Sign in with Google".

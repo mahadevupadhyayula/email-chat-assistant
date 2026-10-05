@@ -62,7 +62,7 @@ email-assistant-chat/
 │       └── integration/
 └── frontend/
     ├── package.json
-    ├── vite.config.ts            # /api proxy → http://localhost:8000
+    ├── vite.config.ts            # /api proxy → http://localhost:8001
     ├── components.json           # shadcn config
     ├── e2e/                      # Playwright specs (Unit 19)
     └── src/

@@ -38,7 +38,7 @@ Every later unit assumes these commands, folders and tools exist. It proves the 
   (Later units append their variables.)
 - `Makefile` targets (all `.PHONY`):
   - `install`: `cd backend && uv sync` ; `cd frontend && pnpm install`
-  - `dev-backend`: `cd backend && uv run uvicorn app.main:app --reload --port 8000 --env-file ../.env`
+  - `dev-backend`: `cd backend && uv run uvicorn app.main:app --reload --port 8001 --env-file ../.env`
   - `dev-frontend`: `cd frontend && pnpm dev`
   - `db`: `docker compose up -d db`
   - `test`: `cd backend && uv run pytest` ; `cd frontend && pnpm test`
@@ -77,7 +77,7 @@ Every later unit assumes these commands, folders and tools exist. It proves the 
 - `pnpm create vite@latest frontend --template react-ts`, then `cd frontend && pnpm install`.
 - Remove boilerplate: `src/App.css`, `src/assets/react.svg`, `public/vite.svg`, demo counter code.
 - `pnpm add -D tailwindcss @tailwindcss/vite vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event prettier eslint-config-prettier`.
-- `vite.config.ts`: plugins `react()`, `tailwindcss()`; `resolve.alias` `@` → `./src`; `server.port = 5173`, `server.proxy = { "/api": { target: "http://localhost:8000", changeOrigin: false } }`; `test: { environment: "jsdom", setupFiles: ["./src/test/setup.ts"], globals: true }` (use `/// <reference types="vitest/config" />`).
+- `vite.config.ts`: plugins `react()`, `tailwindcss()`; `resolve.alias` `@` → `./src`; `server.port = 5173`, `server.proxy = { "/api": { target: "http://localhost:8001", changeOrigin: false } }`; `test: { environment: "jsdom", setupFiles: ["./src/test/setup.ts"], globals: true }` (use `/// <reference types="vitest/config" />`).
 - `tsconfig.app.json`: `strict: true`, `noUncheckedIndexedAccess: true`, `baseUrl: "."`, `paths: {"@/*": ["src/*"]}`, `types: ["vitest/globals", "@testing-library/jest-dom"]`.
 - `src/test/setup.ts`: `import "@testing-library/jest-dom/vitest";`
 - `src/index.css` → rename to `src/styles/globals.css` containing `@import "tailwindcss";` only (tokens come in Unit 04).
@@ -101,7 +101,7 @@ Placeholder only: unstyled heading + status text. Theme arrives in Unit 04.
 
 ## Success criteria
 - [ ] `make db` starts Postgres; `docker compose exec db psql -U app -l` lists `email_assistant` and `email_assistant_test`.
-- [ ] `make dev-backend` → `curl localhost:8000/api/health` returns `{"status":"ok"}`.
+- [ ] `make dev-backend` → `curl localhost:8001/api/health` returns `{"status":"ok"}`.
 - [ ] `make dev-frontend` → `http://localhost:5173` shows "Email Assistant Chat" and "API: ok"; with the backend stopped it shows "API: unreachable".
 - [ ] `make test`, `make lint`, `make build` all pass.
 

@@ -30,7 +30,7 @@ Every UI unit renders inside this shell and uses its tokens, client and query se
 - `main.tsx`: import fonts (`@fontsource-variable/inter`, `@fontsource/jetbrains-mono/400.css`) and `globals.css`.
 
 ### Typed API client — `src/lib/api/`
-- `package.json` script `gen:api`: `openapi-typescript http://localhost:8000/openapi.json -o src/lib/api/schema.d.ts`. Commit the generated file.
+- `package.json` script `gen:api`: `openapi-typescript http://localhost:8001/openapi.json -o src/lib/api/schema.d.ts`. Commit the generated file.
 - `errors.ts`: `class ApiError extends Error { status: number; code: string }`; `isReauthError(e)` → `code === "provider_reauth_required"`.
 - `client.ts`: `async function api<T>(path: string, init?: RequestInit & { json?: unknown }): Promise<T>` — prefixes nothing (paths start with `/api`), sets `credentials: "include"`, JSON body/headers when `json` provided, parses `{"error":{code,message}}` into `ApiError`, returns `undefined` for 204. Export typed helpers using `paths` from `schema.d.ts` where convenient (e.g. `type Me = components["schemas"]["MeResponse"]`).
 

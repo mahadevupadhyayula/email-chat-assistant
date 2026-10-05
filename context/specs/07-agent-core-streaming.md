@@ -92,7 +92,7 @@ N/A — no UI changes (Unit 08).
 - `sse-starlette` — SSE responses.
 
 ## Success criteria
-- [ ] With `OPENAI_API_KEY` set, `curl -N -b "ea_session=<cookie>" -H 'content-type: application/json' -d '{"content":"Say hello in five words"}' localhost:8000/api/conversations/<id>/messages` streams `event: title`, several `event: token`, then `event: done`.
+- [ ] With `OPENAI_API_KEY` set, `curl -N -b "ea_session=<cookie>" -H 'content-type: application/json' -d '{"content":"Say hello in five words"}' localhost:8001/api/conversations/<id>/messages` streams `event: title`, several `event: token`, then `event: done`.
 - [ ] `GET /api/conversations/<id>/messages` returns the user and assistant messages; a follow-up question ("what did I just ask?") is answered with context (checkpointer works).
 - [ ] With LangSmith env set, the run appears in the `email-assistant-chat` project.
 - [ ] With an invalid `OPENAI_API_KEY`, the stream emits `error` `llm_error` then `done`.
