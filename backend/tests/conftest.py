@@ -27,7 +27,7 @@ async def migrated_db_url() -> str:
 
 
 @pytest.fixture
-async def app(migrated_db_url: str, clean_tables: None) -> AsyncIterator[FastAPI]:
+async def app(migrated_db_url: str) -> AsyncIterator[FastAPI]:
     app = create_app(Settings(app_env="test", database_url=migrated_db_url))
     async with app.router.lifespan_context(app):
         yield app
@@ -45,7 +45,7 @@ async def db_session(app: FastAPI) -> AsyncIterator[AsyncSession]:
         yield session
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 async def clean_tables(migrated_db_url: str) -> AsyncIterator[None]:
     yield
     from app.db.session import create_engine
