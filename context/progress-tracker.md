@@ -3,19 +3,19 @@
 Update after every meaningful implementation change.
 
 ## Current Phase
-- Not started
+- Phase 1 — Foundations (Unit 01 done)
 
 ## Current Goal
-- Unit 01 — Project scaffold
+- Unit 02 — Database foundation
 
 ## Completed
-- None yet.
+- Unit 01 — Project scaffold (2026-10-05)
+  - Deviations: Vite 8 template ships oxlint, replaced with ESLint flat config per spec; `baseUrl` omitted from tsconfig.app.json (deprecated in TS 6, `paths` works without it); Node 22 required (jsdom 30 fails on Node 20); backend dev port is 8001 (not 8000) because 8000 is used by another local Docker project — Makefile, vite proxy, README, CLAUDE.md, architecture.md and specs updated.
 
 ## In Progress
-- None yet.
+- None.
 
 ## Next Up
-- Unit 01 — Project scaffold
 - Unit 02 — Database foundation
 - Unit 03 — Google OAuth login & sessions
 

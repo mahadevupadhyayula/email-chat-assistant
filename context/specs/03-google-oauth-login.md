@@ -17,12 +17,12 @@ Every user-owned feature needs an authenticated user, and Gmail access needs the
 
 ## Prerequisites
 - Unit 02 complete.
-- For manual verification only: Google Cloud project, Gmail API enabled, OAuth client type "Web application", authorised redirect URI `http://localhost:8000/api/auth/google/callback`, consent screen in Testing with the user's Gmail as a test user.
+- For manual verification only: Google Cloud project, Gmail API enabled, OAuth client type "Web application", authorised redirect URI `http://localhost:8001/api/auth/google/callback`, consent screen in Testing with the user's Gmail as a test user.
 
 ## How to build it
 
 ### Env / settings
-- Add to `.env.example` and `Settings`: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI=http://localhost:8000/api/auth/google/callback`, `TOKEN_ENCRYPTION_KEY` (comment: generate with `uv run python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`), `SESSION_SECRET` (random 32+ chars), `SESSION_TTL_DAYS=30`. In `test`/`e2e` env, defaults for these are allowed (fixed test values); in `development` they're required (validator raises a clear error if missing).
+- Add to `.env.example` and `Settings`: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI=http://localhost:8001/api/auth/google/callback`, `TOKEN_ENCRYPTION_KEY` (comment: generate with `uv run python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`), `SESSION_SECRET` (random 32+ chars), `SESSION_TTL_DAYS=30`. In `test`/`e2e` env, defaults for these are allowed (fixed test values); in `development` they're required (validator raises a clear error if missing).
 - `GOOGLE_SCOPES` constant in `app/security/oauth.py`: `["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/gmail.modify", "https://www.googleapis.com/auth/gmail.send"]`.
 
 ### `app/security/crypto.py`
@@ -84,7 +84,7 @@ N/A — no UI changes (Unit 04 builds the Login page).
 - `itsdangerous` — signed state cookie.
 
 ## Success criteria
-- [ ] Visiting `http://localhost:8000/api/auth/google/login` goes to Google consent listing Gmail access; after consent the browser lands on `http://localhost:5173/` with an `ea_session` cookie.
+- [ ] Visiting `http://localhost:8001/api/auth/google/login` goes to Google consent listing Gmail access; after consent the browser lands on `http://localhost:5173/` with an `ea_session` cookie.
 - [ ] `oauth_credentials` row exists with encrypted (non-plaintext) tokens and `status = active`.
 - [ ] `GET /api/auth/me` (via `localhost:5173/api/auth/me`) returns the user's email and `gmail_status: "active"`; without a cookie returns 401 `{"error":{"code":"unauthenticated",...}}`.
 - [ ] `POST /api/auth/logout` makes `/me` return 401.
@@ -116,7 +116,7 @@ make lint
 
 **Manual verification:**
 1. Fill Google vars in `.env`, restart backend.
-2. Open `http://localhost:8000/api/auth/google/login`, consent → lands on `localhost:5173`.
+2. Open `http://localhost:8001/api/auth/google/login`, consent → lands on `localhost:5173`.
 3. Open `http://localhost:5173/api/auth/me` → JSON with your email, `gmail_status: "active"`.
 4. `docker compose exec db psql -U app -d email_assistant -c 'select left(encrypted_refresh_token, 12) from oauth_credentials'` → Fernet ciphertext (starts with `gAAAA`).
 

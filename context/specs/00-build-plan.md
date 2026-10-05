@@ -56,7 +56,7 @@ Build units strictly in order. Each unit has a spec file in this folder. Finish,
 | `@playwright/test` | 19 | E2E smoke |
 
 ## Notes
-- **Risk — Gmail OAuth setup:** Unit 03 manual verification requires a Google Cloud project with the Gmail API enabled, an OAuth client (Web), redirect URI `http://localhost:8000/api/auth/google/callback`, consent screen in Testing mode with the user's address as a test user. README (Unit 03) documents the steps.
+- **Risk — Gmail OAuth setup:** Unit 03 manual verification requires a Google Cloud project with the Gmail API enabled, an OAuth client (Web), redirect URI `http://localhost:8001/api/auth/google/callback`, consent screen in Testing mode with the user's address as a test user. README (Unit 03) documents the steps.
 - **Risk — LangGraph interrupts inside tools:** tools re-execute from the top on resume; Unit 12 tests assert no side effects happen before `interrupt()`.
 - **Sequencing:** contacts (10–11) come before compose (12) so `lookup_contact` has data. Digest API/UI (16–17) do not depend on the agent and could be built after Unit 04 if the user wants to parallelise, but keep the numbered order by default.
 - **Re-check before implementing:** specs 10–19 are lighter on file-level detail; re-read the current code (especially `agent/streaming.py`, `features/chat/`, and `email/types.py`) before starting each, since earlier units may have shifted names.
