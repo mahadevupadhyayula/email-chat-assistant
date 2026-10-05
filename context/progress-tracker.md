@@ -3,20 +3,21 @@
 Update after every meaningful implementation change.
 
 ## Current Phase
-- Phase 1 — Foundations (Unit 01 done)
+- Phase 1 — Foundations (Units 01–02 done)
 
 ## Current Goal
-- Unit 02 — Database foundation
+- Unit 03 — Google OAuth login & sessions
 
 ## Completed
 - Unit 01 — Project scaffold (2026-10-05)
   - Deviations: Vite 8 template ships oxlint, replaced with ESLint flat config per spec; `baseUrl` omitted from tsconfig.app.json (deprecated in TS 6, `paths` works without it); Node 22 required (jsdom 30 fails on Node 20); backend dev port is 8001 (not 8000) because 8000 is used by another local Docker project — Makefile, vite proxy, README, CLAUDE.md, architecture.md and specs updated.
+- Unit 02 — Database foundation (2026-10-05)
+  - Deviations: added `asyncio_default_test_loop_scope = "session"` to pytest config (session-loop fixtures otherwise hit asyncpg "different loop" errors); the spec's naming convention yields constraint name `uq_oauth_credentials_user_id` for unique(user_id, provider). Frontend tests need Node 22 (not enforced in repo).
 
 ## In Progress
 - None.
 
 ## Next Up
-- Unit 02 — Database foundation
 - Unit 03 — Google OAuth login & sessions
 
 ## Open Questions

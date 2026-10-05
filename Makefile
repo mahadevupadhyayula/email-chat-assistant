@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: install dev-backend dev-frontend db test lint format build
+.PHONY: migrate install dev-backend dev-frontend db test lint format build
 
 install:
 	cd backend && uv sync
@@ -11,6 +11,9 @@ dev-backend:
 
 dev-frontend:
 	cd frontend && pnpm dev
+
+migrate:
+	cd backend && uv run alembic upgrade head
 
 db:
 	docker compose up -d db
