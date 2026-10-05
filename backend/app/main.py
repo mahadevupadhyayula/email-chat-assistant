@@ -16,10 +16,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         engine = create_engine(settings.database_url)
-        app.state.engine = engine
-        app.state.session_factory = create_session_factory(engine)
-        yield
-        await engine.dispose()
+        try:
+            app.state.engine = engine
+            app.state.session_factory = create_session_factory(engine)
+            yield
+        finally:
+            await engine.dispose()
 
     app = FastAPI(title="Email Assistant Chat API", lifespan=lifespan)
     app.state.settings = settings
